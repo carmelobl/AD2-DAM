@@ -13,12 +13,14 @@ public class Ej2_1 {
 		
 		File dir1=new File(ruta);
 		
-		if(dir1.exists()&&dir1.isDirectory()) {
+		if(dir1.exists()) {
+			System.out.println("hoaodsl");
 			File[] listado=dir1.listFiles();
 			for(int x=0;x<listado.length;x++) {
 				System.out.println(listado[x].getName());
 			}
 		}
+		else System.out.println("no existe");
 				
 	}
 
