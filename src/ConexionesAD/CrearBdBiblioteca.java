@@ -30,7 +30,7 @@ public class CrearBdBiblioteca {
 		Connection conexion01=ConexionSqlLite.conectar(bd);
 		String crearTablaLibros="CREATE TABLE Libros(codigolibro INT NOT NULL,titulo VARCHAR(60),autor VARCHAR(25),editorial VARCHAR(25),año INT,ISBN VARCHAR(25) NOT NULL UNIQUE,numeroejemplares INT,numeropaginas INT,PRIMARY KEY(codigolibro))";
 		String crearTablaSocio="CREATE TABLE Socios(codigousuario INT PRIMARY KEY NOT NULL,nombre VARCHAR(15),apellidos VARCHAR(40),fechanac DATE,domicilio VARCHAR(40), telefono VARCHAR(10))";
-		String crearTablaPrestamo="CREATE TABLE Prestamos(codigo INT NOT NULL,codigosocio INT NOT NULL,fechainicio DATE,fechafin DATE,FOREIGN KEY(codigo) REFERENCES Libros(codigolibro),FOREIGN KEY(codigosocio) REFERENCES Socios(codigosocio),PRIMARY KEY(codigo,codigosocio))";
+		String crearTablaPrestamo="CREATE TABLE Prestamos(codigo INT NOT NULL,codigosocio INT NOT NULL,fechainicio DATE,fechafin DATE,FOREIGN KEY(codigo) REFERENCES Libros(codigolibro),FOREIGN KEY(codigosocio) REFERENCES Socios(codigousuario),PRIMARY KEY(codigo,codigosocio))";
 
 		///////CREO PREVIO A INSERCIÓN
 		//LIBROS
