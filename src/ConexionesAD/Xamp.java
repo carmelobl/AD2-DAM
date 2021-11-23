@@ -38,6 +38,8 @@ public class Xamp extends JFrame implements ActionListener {
 	static JButton editar;
 	static JButton guardar;
 	static JButton eliminar;
+	JButton OrdenarNombre;
+	JButton OrdenarEdad;
 	static JList<Persona> lista;
 	static Xamp p1;
 	public static void main(String[] args)  {
@@ -60,7 +62,7 @@ public class Xamp extends JFrame implements ActionListener {
 				}
 				pack();
 				setVisible(true);
-
+			lista.updateUI();
 			pst.close();
 			rs.close();
 
@@ -91,6 +93,17 @@ public class Xamp extends JFrame implements ActionListener {
 		setLocation(850, 450);
 		setMinimumSize(new Dimension(400, 100));
 		
+		
+		marco.add(OrdenarNombre = new JButton("Ordenar por Nombre"));
+		OrdenarNombre.addActionListener(this);
+		setLocation(850, 450);
+		setMinimumSize(new Dimension(400, 100));
+		
+		marco.add(OrdenarEdad = new JButton("Ordenar por Edad"));
+		OrdenarEdad.addActionListener(this);
+		setLocation(850, 450);
+		setMinimumSize(new Dimension(400, 100));
+		
 		add(marco);
 
 		pack();
@@ -101,13 +114,22 @@ public class Xamp extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String botones = e.getActionCommand();
+		if (botones.equals("Ordenar por Nombre")) {
+			dm.clear();
+			OrdenarNombre();		
+		}
+		if (botones.equals("Ordenar por Edad")) {
+			dm.clear();
+			OrdenarEdad();		
+		}
 		if (botones.equals("Añadir")) {
-			lista.clearSelection();
+
 			añadir();
 		}
 		if (botones.equals("Eliminar")) {
 			
 			eliminar();
+			dm.clear();
 
 		}
 		if (botones.equals("Guardar")) {
@@ -214,5 +236,54 @@ public class Xamp extends JFrame implements ActionListener {
 			}
 		}
 	}
+	public void OrdenarNombre() {
+		try {
+			Connection connection = null;
+			connection = Prueba01.Conectar();
+
+			PreparedStatement mostrar=connection.prepareStatement("SELECT * FROM `personas1` ORDER BY nombre");
+			ResultSet rs =mostrar.executeQuery();
+
+			while(rs.next()) {
+				dm.addElement(rs.getString("nombre"));
+			}
+			lista.setModel(dm);
+
+
+		}catch(SQLException e) {
+			System.out.println("Excecpión "+e);
+		}
+
+
+	}
+	//Ordeno de menor a mayor todas las edades que tengo en la tabla 
+	public void OrdenarEdad() {
+		try {
+			Connection connection = null;
+			connection = Prueba01.Conectar();
+
+
+			PreparedStatement mostrar=connection.prepareStatement("SELECT * FROM `personas1` ORDER BY edad");
+			ResultSet rs =mostrar.executeQuery();
+
+			while(rs.next()) {
+				dm.addElement(rs.getString("edad"));
+			}
+			lista.setModel(dm);
+
+
+		}catch(SQLException e) {
+			System.out.println("Excecpión "+e);
+		}
+
+
+	}
+
+
+
+
+
+
+
 
 }
